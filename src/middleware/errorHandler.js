@@ -1,6 +1,5 @@
 
 export function errorHandler(err, req, res, next) {
-  // Mongoose validation errors
   if (err.name === "ValidationError") {
     const fields = {};
 
@@ -14,7 +13,6 @@ export function errorHandler(err, req, res, next) {
     });
   }
 
-  // Invalid MongoDB ID
   if (err.name === "CastError") {
     return res.status(400).json({
       error: "CastError",
@@ -23,7 +21,6 @@ export function errorHandler(err, req, res, next) {
     });
   }
 
-  // Duplicate unique field, such as slug
   if (err.code === 11000) {
     const field = Object.keys(err.keyValue || {})[0] || "unknown";
 
@@ -34,8 +31,6 @@ export function errorHandler(err, req, res, next) {
     });
   }
 
-  // Unexpected errors
-  // Unexpected errors
   console.error(err);
 
   return res.status(500).json({
