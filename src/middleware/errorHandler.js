@@ -31,8 +31,8 @@ export function errorHandler(err, req, res, next) {
     });
   }
 
+  // Fallback for unexpected errors
   console.error(err);
-
   return res.status(500).json({
     error: "InternalServerError",
   });
