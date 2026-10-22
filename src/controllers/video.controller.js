@@ -64,7 +64,7 @@ export const topVideos = async (req, res, next) => {
       },
       {
         $project: {
-          _id: 0,
+          _id: 1,
           title: 1,
           views: 1,
         },

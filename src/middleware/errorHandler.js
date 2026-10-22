@@ -1,6 +1,6 @@
 
 export function errorHandler(err, req, res, next) {
-  // TASK 4a: Mongoose validation error -> 400
+  // Mongoose validation errors
   if (err.name === "ValidationError") {
     const fields = {};
 
@@ -14,7 +14,7 @@ export function errorHandler(err, req, res, next) {
     });
   }
 
-  // TASK 4b: Invalid MongoDB ObjectId -> 400
+  // Invalid MongoDB ID
   if (err.name === "CastError") {
     return res.status(400).json({
       error: "CastError",
@@ -23,18 +23,19 @@ export function errorHandler(err, req, res, next) {
     });
   }
 
-  // TASK 4c: Duplicate unique field -> 409
+  // Duplicate unique field, such as slug
   if (err.code === 11000) {
     const field = Object.keys(err.keyValue || {})[0] || "unknown";
 
     return res.status(409).json({
       error: "DuplicateKey",
-      message: field + " already exists",
+      message: `${field} already exists`,
       field,
     });
   }
 
-  // Fallback: unexpected error -> 500
+  // Unexpected errors
+  // Unexpected errors
   console.error(err);
 
   return res.status(500).json({
